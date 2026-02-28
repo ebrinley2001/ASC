@@ -28,12 +28,11 @@ namespace ASC.Installer
 
             project.Platform = Platform.x64;
 
-            project.ResolveWildCards().FindFile(f => f.Name.EndsWith(EXE_NAME))
-               .First()
-               .Shortcuts = new[]
-                    {
-                        new FileShortcut($"{APP_NAME}.exe", "%Desktop%")
-                    };
+            var exe = project.ResolveWildCards().FindFile(f => f.Name.EndsWith(EXE_NAME)).First();
+            exe.Shortcuts = new[]
+                {
+                    new FileShortcut($"{APP_NAME}.exe", "%Desktop%")
+                };
 
             project.GUID = new Guid("ad39908c-ba52-4073-8ead-248ff3f7c2e9");
 
@@ -71,7 +70,7 @@ namespace ASC.Installer
                 }
             );
 
-            bootstrapper.SetVersionFromFile(productMsi);
+            bootstrapper.SetVersionFromFile(exe.Name);
 
             bootstrapper.Build(Path.Combine(OUTPUT_FOLDER, "ASC Installer.exe"));
         }
