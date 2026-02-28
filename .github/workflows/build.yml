@@ -22,12 +22,12 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
-        run: dotnet build ASC.UI/ASC.UI.csproj --no-restore
+        run: dotnet build ASC.UI/ASC.UI.csproj -c Release --no-restore
       - name: Test
         run: dotnet test --no-build --verbosity normal
   
       - name: Build Installer
-        run: dotnet build ASC.Installer/ASC.Installer.csproj --no-restore
+        run: dotnet build ASC.Installer/ASC.Installer.csproj -c Release --no-restore
         
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v7.0.0
