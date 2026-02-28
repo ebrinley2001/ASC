@@ -6,16 +6,17 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+	<Version>0.0.1</Version>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.24" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.3" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
-    <PackageReference Include="PuppeteerSharp" Version="21.1.1" />
-    <PackageReference Include="Razor.Templating.Core" Version="2.1.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.24" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.3" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
+		<PackageReference Include="PuppeteerSharp" Version="21.1.1" />
+		<PackageReference Include="Razor.Templating.Core" Version="2.1.0" />
+	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ASC.BC\ASC.BC.csproj" />
