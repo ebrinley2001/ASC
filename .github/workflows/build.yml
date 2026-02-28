@@ -1,0 +1,54 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  pull_request:
+    branches: [ "main" ]
+    types:
+      - closed
+
+jobs:
+    build:
+      if: github.event.pull_request.merged == true
+      runs-on: windows-latest
+      steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build ASC.UI/ASC.UI.csproj --no-restore
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+  
+      - name: Build Installer
+        run: dotnet build ASC.Installer/ASC.Installer.csproj --no-restore
+        
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v7.0.0
+        with:
+          name: release-assets
+          path: ASC.Installer/build
+          overwrite: true
+          
+    release:
+      needs: build
+      runs-on: windows-latest
+      steps:
+          - name: Download a Build Artifact
+            uses: actions/download-artifact@v8.0.0
+            with:
+              name: release-assets
+              path: staging/
+          - name: Create GitHub Release
+            uses: softprops/action-gh-release@v2
+            with:
+              files: staging/*
+            env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
