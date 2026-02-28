@@ -34,7 +34,7 @@ jobs:
         run: dotnet tool install --global wix
         
       - name: Install Wix Extensions
-        run: wix.exe extension add -g WixToolset.UI.wixext/7.0.0
+        run: wix.exe extension add -g WixToolset.UI.wixext/6.0.0
   
       - name: Build Installer
         run: dotnet build ASC.Installer/ASC.Installer.csproj -c Release --no-restore
