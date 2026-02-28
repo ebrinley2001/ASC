@@ -68,7 +68,7 @@ jobs:
               $fileInfo = Get-Item -Path "staging/ASC Installer.exe"
               $version = $fileInfo.VersionInfo.ProductVersion
               echo "The app version is: $version"
-              echo "fileVersion=$version" >> "%GITHUB_OUTPUT%"
+              echo "fileVersion=$version" >> $env:GITHUB_OUTPUT
                     
           - name: Create GitHub Release
             uses: softprops/action-gh-release@v2
