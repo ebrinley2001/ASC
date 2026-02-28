@@ -52,6 +52,7 @@ jobs:
           
     release:
       needs: build
+      permissions: write-all
       runs-on: windows-latest
       steps:
           - name: Download a Build Artifact
