@@ -69,6 +69,9 @@ jobs:
               $version = $fileInfo.VersionInfo.ProductVersion
               echo "The app version is: $version"
               echo "versionNumber=$version" >> "$GITHUB_OUTPUT"
+              
+          - name: PRINT VERSION OUTPUT
+            run: echo ${{ steps.get_version.outputs.versionNumber }}
                     
           - name: Create GitHub Release
             uses: softprops/action-gh-release@v2
