@@ -65,7 +65,7 @@ jobs:
             id: get_version
             shell: powershell
             run: |
-              $fileInfo = Get-Item -Path "staging/release-assets/ASC Installer.exe"
+              $fileInfo = Get-Item -Path "release-assets/ASC Installer.exe"
               $version = $fileInfo.VersionInfo.ProductVersion
               echo "The app version is: $version"
               echo "version=$version" >> $GITHUB_OUTPUT
