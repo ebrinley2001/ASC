@@ -60,12 +60,21 @@ jobs:
             with:
               name: release-assets
               path: staging/
-              
+
+          - name: Get Version
+            id: get_version
+            shell: powershell
+            run: |
+              $fileInfo = Get-Item -Path "staging/release-assets/ASC Installer.exe"
+              $version = $fileInfo.VersionInfo.ProductVersion
+              echo "The app version is: $version"
+              echo "version=$version" >> $GITHUB_OUTPUT
+                    
           - name: Create GitHub Release
             uses: softprops/action-gh-release@v2
             with:
               files: staging/*
-              tag_name: ${{ github.ref_name }}
+              tag_name: "${{ github.ref_name }}-${{ steps.get_version.outputs.version }}-${{ github.run_id }}"
               prerelease: ${{ github.event_name == 'workflow_dispatch' }}
             env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
