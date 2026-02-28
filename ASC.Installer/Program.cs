@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using WixSharp;
 using WixSharp.Bootstrapper;
 using WixSharp.CommonTasks;
+using File = WixSharp.File;
 
 namespace ASC.Installer
 {
@@ -14,6 +16,8 @@ namespace ASC.Installer
             const string APP_NAME = "Aelimor Sheet Creator";
             const string INSTALL_DIR = @"%ProgramFiles%\ASC";
             const string EXE_NAME = "ASC.UI.exe";
+
+            const string OUTPUT_FOLDER = "build";
 
             var project = new ManagedProject(APP_NAME,
                 new Dir(INSTALL_DIR,
@@ -33,7 +37,7 @@ namespace ASC.Installer
 
             project.GUID = new Guid("ad39908c-ba52-4073-8ead-248ff3f7c2e9");
 
-            string productMsi = project.BuildMsi();
+            string productMsi = project.BuildMsi(Path.Combine(OUTPUT_FOLDER, "ASC Installer.msi"));
 
             var bootstrapper = new Bundle(APP_NAME,
                 Net8(),
@@ -69,7 +73,7 @@ namespace ASC.Installer
 
             bootstrapper.SetVersionFromFile(productMsi);
 
-            bootstrapper.Build("ASC Installer.exe");
+            bootstrapper.Build(Path.Combine(OUTPUT_FOLDER, "ASC Installer.exe"));
         }
 
         private static ExePackage Net8Desktop()
