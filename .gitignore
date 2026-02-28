@@ -416,3 +416,9 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# WixSharp Generated Files
+*.g.wxs
+*.wixpdb
+*.exe
+*.msi

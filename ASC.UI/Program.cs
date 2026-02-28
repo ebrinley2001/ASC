@@ -15,7 +15,7 @@ namespace ASC.UI
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             IConfiguration config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
@@ -47,7 +47,16 @@ namespace ASC.UI
             serviceCollection.AddTransient<SkillLoad>();
 
             ServiceProvider = serviceCollection.BuildServiceProvider();
-            Application.Run(ServiceProvider.GetRequiredService<Main>());
+
+            if (args.Contains("-ADMIN"))
+            {
+                Application.Run(ServiceProvider.GetRequiredService<Main>());
+            }
+            else
+            {
+                Application.Run(ServiceProvider.GetRequiredService<CharacterCreationForm>());
+            }
+            
         }
     }
 }

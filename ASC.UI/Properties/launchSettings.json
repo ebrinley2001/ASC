@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ASC.UI": {
+      "commandName": "Project",
+      "commandLineArgs": "-ADMIN"
+    }
+  }
+}
