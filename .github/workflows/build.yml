@@ -68,13 +68,13 @@ jobs:
               $fileInfo = Get-Item -Path "staging/ASC Installer.exe"
               $version = $fileInfo.VersionInfo.ProductVersion
               echo "The app version is: $version"
-              echo "version=$version" >> %GITHUB_OUTPUT%
+              echo "fileVersion=$version" >> "%GITHUB_OUTPUT%"
                     
           - name: Create GitHub Release
             uses: softprops/action-gh-release@v2
             with:
               files: staging/*
-              tag_name: ASC-${{ github.ref_name }}-v${{ steps.get_version.outputs.version }}-${{ github.run_id }}
+              tag_name: ASC-${{ github.ref_name }}-v${{ steps.get_version.outputs.fileVersion }}-${{ github.run_id }}
               prerelease: ${{ github.event_name == 'workflow_dispatch' }}
             env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
