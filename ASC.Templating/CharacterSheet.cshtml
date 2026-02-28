@@ -1,0 +1,458 @@
+﻿@model ASC.Models.Character
+
+@{
+    var passiveSkills = Model.Skills.Where(s => s.Value.IsCombatSkill && s.Value.StaminaCost == 0).ToList();
+    var staminaSkills = Model.Skills.Where(s => s.Value.StaminaCost > 0).ToList();
+    var generalSkills = Model.Skills.Where(s => s.Value.Class == null).ToList();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@Model.Name - Character Sheet</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            background: #fff;
+            color: #000;
+        }
+
+        .page {
+            width: 940px;
+            margin: 0 auto;
+            padding: 8px;
+        }
+
+        /* Outer wrapper: left main area | right sidebar */
+        .outer {
+            display: grid;
+            grid-template-columns: 1fr 220px;
+            gap: 0;
+            border: 1px solid #000;
+        }
+
+        /* ── LEFT MAIN ── */
+        .main {
+            border-right: 1px solid #000;
+        }
+
+        /* Header row inside main */
+        .main-header {
+            display: grid;
+            grid-template-columns: 220px 1fr 90px 90px 110px;
+            border-bottom: 1px solid #000;
+        }
+
+        .mh-name {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            font-weight: bold;
+            border-right: 1px solid #000;
+            padding: 6px;
+        }
+
+        .mh-attrs {
+            border-right: 1px solid #000;
+            padding: 4px 6px;
+        }
+
+            .mh-attrs .col-head {
+                text-align: center;
+                font-weight: bold;
+                font-size: 11px;
+            }
+
+            .mh-attrs .attr-row {
+                text-align: center;
+                font-size: 11px;
+            }
+
+        .mh-xptotal {
+            border-right: 1px solid #000;
+            text-align: center;
+            padding: 4px;
+        }
+
+        .mh-level {
+            border-right: 1px solid #000;
+            text-align: center;
+            padding: 4px;
+        }
+
+        .mh-xpspend {
+            text-align: center;
+            padding: 4px;
+        }
+
+        .mh-sub {
+            font-size: 9px;
+            font-weight: bold;
+        }
+
+        .mh-val {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .mh-extra {
+            font-size: 10px;
+        }
+
+        /* Class rows — each class gets its own row with General col on left */
+        .class-section {
+            border-bottom: 1px solid #000;
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            min-height: 120px;
+        }
+
+            .class-section:last-child {
+                border-bottom: none;
+            }
+
+        /* General/left column of class section */
+        .left-col {
+            border-right: 1px solid #000;
+        }
+
+        .right-col {
+        }
+
+        /* Shared skill table inside a column */
+        .skill-block-header {
+            display: grid;
+            grid-template-columns: 1fr 36px 50px;
+            border-bottom: 1px solid #000;
+            padding: 2px 6px;
+        }
+
+            .skill-block-header span {
+                font-weight: bold;
+                text-align: center;
+            }
+
+                .skill-block-header span:first-child {
+                    text-align: left;
+                }
+
+        .skill-row {
+            display: grid;
+            grid-template-columns: 1fr 36px 50px;
+            padding: 1px 6px;
+        }
+
+            .skill-row span {
+                text-align: center;
+            }
+
+                .skill-row span:first-child {
+                    text-align: left;
+                }
+
+        /* ── RIGHT SIDEBAR ── */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top stat grid: Base | Current columns */
+        .sb-stat-header {
+            display: grid;
+            grid-template-columns: 1fr 50px 60px;
+            border-bottom: 1px solid #000;
+            padding: 1px 4px;
+        }
+
+            .sb-stat-header span {
+                text-align: center;
+                font-weight: bold;
+                font-size: 10px;
+            }
+
+        .sb-stat-row {
+            display: grid;
+            grid-template-columns: 1fr 50px 60px;
+            border-bottom: 1px solid #aaa;
+            padding: 1px 4px;
+        }
+
+            .sb-stat-row span:first-child {
+                font-weight: bold;
+                font-size: 10px;
+            }
+
+            .sb-stat-row span {
+                text-align: center;
+            }
+
+        .sb-divider {
+            border-top: 1px solid #000;
+            margin-top: 4px;
+        }
+
+        /* Passive / Stamina / Consumable skill sections in sidebar */
+        .sb-section-header {
+            display: grid;
+            grid-template-columns: 1fr 50px;
+            padding: 2px 4px;
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #aaa;
+        }
+
+            .sb-section-header span {
+                font-weight: bold;
+                font-size: 10px;
+                text-align: center;
+            }
+
+                .sb-section-header span:first-child {
+                    text-align: right;
+                    padding-right: 8px;
+                }
+
+        .sb-skill-row {
+            display: grid;
+            grid-template-columns: 1fr 50px;
+            padding: 1px 4px;
+            border-bottom: 1px solid #eee;
+        }
+
+            .sb-skill-row span {
+                text-align: center;
+                font-size: 10px;
+            }
+
+                .sb-skill-row span:first-child {
+                    text-align: center;
+                }
+
+        .spacer {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="outer">
+            <div class="main">
+                <div class="main-header">
+                    <div class="mh-name">@Model.Name</div>
+
+                    <div class="mh-attrs">
+                        <div class="col-head">Attributes</div>
+                        @foreach (var attr in Model.Attributes)
+                        {
+                            <div class="attr-row">@attr.Name</div>
+                        }
+                    </div>
+
+                    <div class="mh-xptotal">
+                        <div class="mh-sub">XP Total</div>
+                        <div class="mh-val">@Model.XpAmount</div>
+                        <div class="mh-extra">@Model.Race.Name</div>
+                    </div>
+
+                    <div class="mh-level">
+                        <div class="mh-sub">Level</div>
+                        <div class="mh-val">@Model.Level.Id</div>
+                    </div>
+
+                    <div class="mh-xpspend">
+                        <div class="mh-sub">XP to Spend</div>
+                        <div class="mh-val">@Model.XpToSpend</div>
+                    </div>
+                </div>
+
+                @for (int i = 0; i < Model.Classes.Count; i += 2)
+                {
+                    var leftClass = i == 0 ? null : Model.Classes[i];       // first row left is "General"
+                    var rightClass = i < Model.Classes.Count ? Model.Classes[i == 0 ? i : i] : null;
+
+                    // Recalculate: left col = General skills first section, then each class occupies right
+                    // We'll do: row 0 = General | Class[0], row 1 = Class[1] | Class[2], etc.
+                }
+
+                <div class="class-section">
+                    <div class="left-col">
+                        <div class="skill-block-header">
+                            <span>General</span><span>#</span><span>XP</span>
+                        </div>
+                        @foreach (var kvp in generalSkills)
+                        {
+                            <div class="skill-row">
+                                <span>@kvp.Value.Name</span>
+                                <span>@kvp.Key</span>
+                                <span>@kvp.Value.XPCost</span>
+                            </div>
+                        }
+                    </div>
+                    <div class="right-col">
+                        @if (Model.Classes.Count > 0)
+                        {
+                            var cls = Model.Classes[0];
+                            <div class="skill-block-header">
+                                <span>@cls.Name</span><span>#</span><span>XP</span>
+                            </div>
+                            @foreach (var kvp in Model.Skills.Where(s => s.Value.ClassId == cls.Id))
+                            {
+                                <div class="skill-row">
+                                    <span>@kvp.Value.Name</span>
+                                    <span>@kvp.Key</span>
+                                    <span>@kvp.Value.XPCost</span>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+
+                @for (int i = 1; i < Model.Classes.Count; i += 2)
+                {
+                    var clsLeft = Model.Classes[i];
+                    var clsRight = (i + 1) < Model.Classes.Count ? Model.Classes[i + 1] : null;
+                    <div class="class-section">
+                        <div class="left-col">
+                            <div class="skill-block-header">
+                                <span>@clsLeft.Name</span><span>#</span><span>XP</span>
+                            </div>
+                            @foreach (var kvp in Model.Skills.Where(s => s.Value.ClassId == clsLeft.Id))
+                            {
+                                <div class="skill-row">
+                                    <span>@kvp.Value.Name</span>
+                                    <span>@kvp.Key</span>
+                                    <span>@kvp.Value.XPCost</span>
+                                </div>
+                            }
+                        </div>
+                        <div class="right-col">
+                            @if (clsRight != null)
+                            {
+                                <div class="skill-block-header">
+                                    <span>@clsRight.Name</span><span>#</span><span>XP</span>
+                                </div>
+                                @foreach (var kvp in Model.Skills.Where(s => s.Value.ClassId == clsRight.Id))
+                                {
+                                    <div class="skill-row">
+                                        <span>@kvp.Value.Name</span>
+                                        <span>@kvp.Key</span>
+                                        <span>@kvp.Value.XPCost</span>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="skill-block-header"><span>-</span><span>#</span><span>XP</span></div>
+                            }
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+            <div class="sidebar">
+                <div class="sb-stat-header">
+                    <span></span><span>Base</span><span>Current</span>
+                </div>
+                <div class="sb-stat-row">
+                    <span>Hit Points</span>
+                    <span>@Model.Hp</span>
+                    <span></span>
+                </div>
+                <div class="sb-stat-row">
+                    <span>Natural Armor</span>
+                    <span>@Model.NaturalArmor</span>
+                    <span></span>
+                </div>
+                <div class="sb-stat-row">
+                    <span>Max Armor</span>
+                    <span>@Model.MaxArmor</span>
+                    <span></span>
+                </div>
+                <div class="sb-stat-row">
+                    <span>Stamina</span>
+                    <span>@Model.Stamina</span>
+                    <span></span>
+                </div>
+                <div class="sb-stat-row">
+                    <span>Spirit Presence</span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="sb-section-header">
+                    <span>Passive Skills</span><span></span>
+                </div>
+                @foreach (var kvp in passiveSkills)
+                {
+                    <div class="sb-skill-row">
+                        <span>@kvp.Value.Name</span>
+                        <span>@(kvp.Key == 0 ? "-" : kvp.Key.ToString())</span>
+                    </div>
+                }
+
+                <div class="sb-section-header">
+                    <span>Stamina Skills</span><span>Cost</span>
+                </div>
+                @foreach (var kvp in staminaSkills)
+                {
+                    <div class="sb-skill-row">
+                        <span>@kvp.Value.Name</span>
+                        <span>@kvp.Value.StaminaCost</span>
+                    </div>
+                }
+
+                <div class="spacer"></div>
+
+@*                 <div class="sb-section-header">
+                    <span>Consumable Skills</span><span>/Reset</span>
+                </div>
+                @foreach (var kvp in Model.Skills.Where(s => s.Value.Category == SkillCategory.Consumable && s.Value.RefreshType == "Reset"))
+                {
+                    <div class="sb-skill-row">
+                        <span>@kvp.Value.Name</span>
+                        <span>@kvp.Key</span>
+                    </div>
+                }
+
+                <div class="spacer"></div>
+
+                {{-- Consumable Skills /Rejuv --}}
+                <div class="sb-section-header">
+                    <span>Consumable Skills</span><span>/Rejuv</span>
+                </div>
+                @foreach (var kvp in Model.Skills.Where(s => s.Value.Category == SkillCategory.Consumable && s.Value.RefreshType == "Rejuv"))
+                {
+                    <div class="sb-skill-row">
+                        <span>@kvp.Value.Name</span>
+                        <span>@kvp.Key</span>
+                    </div>
+                }
+
+                <div class="spacer"></div>
+
+                {{-- Consumable Skills /Ever --}}
+                <div class="sb-section-header">
+                    <span>Consumable Skills</span><span>/Ever</span>
+                </div>
+                @foreach (var kvp in Model.Skills.Where(s => s.Value.Category == SkillCategory.Consumable && s.Value.RefreshType == "Ever"))
+                {
+                    <div class="sb-skill-row">
+                        <span>@kvp.Value.Name</span>
+                        <span>@kvp.Key</span>
+                    </div>
+                } *@
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
