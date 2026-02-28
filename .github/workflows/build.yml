@@ -1,0 +1,81 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Build and Release ASC
+
+on:
+  pull_request:
+    branches: [ "main" ]
+    types:
+      - closed
+  workflow_dispatch:
+
+jobs:
+    build:
+      runs-on: windows-latest
+      steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+          
+      - name: Restore dependencies
+        run: dotnet restore
+        
+      - name: Build
+        run: dotnet build ASC.UI/ASC.UI.csproj -c Release --no-restore
+        
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+
+      - name: Install Wix
+        run: dotnet tool install --global wix
+        
+      - name: Install Wix Extensions
+        run: wix.exe extension add -g WixToolset.UI.wixext/6.0.0 | 
+             wix.exe extension add -g WixToolset.Netfx.wixext/6.0.0 |
+             wix.exe extension add -g WixToolset.Bal.wixext/6.0.0 |
+             wix.exe extension add -g WixToolset.Util.wixext/6.0.0
+             
+  
+      - name: Build Installer
+        run: dotnet build ASC.Installer/ASC.Installer.csproj -c Release --no-restore
+        
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v7.0.0
+        with:
+          name: release-assets
+          path: ASC.Installer/build
+          overwrite: true
+          
+    release:
+      needs: build
+      permissions: write-all
+      runs-on: windows-latest
+      steps:
+          - name: Download a Build Artifact
+            uses: actions/download-artifact@v8.0.0
+            with:
+              name: release-assets
+              path: staging/
+
+          - name: Get Version
+            id: get_version
+            shell: powershell
+            run: |
+              $fileInfo = Get-Item -Path "staging/ASC Installer.exe"
+              $version = $fileInfo.VersionInfo.ProductVersion
+              echo "The app version is: $version"
+              echo "version=$version" >> $GITHUB_OUTPUT
+                    
+          - name: Create GitHub Release
+            uses: softprops/action-gh-release@v2
+            with:
+              files: staging/*
+              tag_name: "ASC-${{ github.ref_name }}-${{ steps.get_version.outputs.version }}-${{ github.run_id }}"
+              prerelease: ${{ github.event_name == 'workflow_dispatch' }}
+            env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
