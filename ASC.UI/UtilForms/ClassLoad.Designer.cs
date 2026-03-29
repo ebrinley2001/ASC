@@ -40,6 +40,10 @@
             label4 = new Label();
             DescRtxt = new RichTextBox();
             groupBox1 = new GroupBox();
+            label6 = new Label();
+            ArmorNud = new NumericUpDown();
+            NatArmorNud = new NumericUpDown();
+            label7 = new Label();
             label3 = new Label();
             ClassDgv = new DataGridView();
             SkillLoadName = new DataGridViewTextBoxColumn();
@@ -47,16 +51,12 @@
             ClassLoadBaseStamina = new DataGridViewTextBoxColumn();
             ClassLoadIsProfession = new DataGridViewCheckBoxColumn();
             sqliteCommand1 = new Microsoft.Data.Sqlite.SqliteCommand();
-            label6 = new Label();
-            ArmorNud = new NumericUpDown();
-            NatArmorNud = new NumericUpDown();
-            label7 = new Label();
             ((System.ComponentModel.ISupportInitialize)BaseStaminaNud).BeginInit();
             ((System.ComponentModel.ISupportInitialize)BaseHealthNud).BeginInit();
             groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)ClassDgv).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ArmorNud).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NatArmorNud).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ClassDgv).BeginInit();
             SuspendLayout();
             // 
             // SaveBtn
@@ -64,7 +64,7 @@
             SaveBtn.Location = new Point(343, 163);
             SaveBtn.Name = "SaveBtn";
             SaveBtn.Size = new Size(75, 23);
-            SaveBtn.TabIndex = 0;
+            SaveBtn.TabIndex = 7;
             SaveBtn.Text = "Save";
             SaveBtn.UseVisualStyleBackColor = true;
             // 
@@ -91,7 +91,7 @@
             NameTxt.Location = new Point(95, 19);
             NameTxt.Name = "NameTxt";
             NameTxt.Size = new Size(100, 23);
-            NameTxt.TabIndex = 3;
+            NameTxt.TabIndex = 0;
             // 
             // LogLbl
             // 
@@ -117,7 +117,7 @@
             IsProfessionCb.Location = new Point(230, 140);
             IsProfessionCb.Name = "IsProfessionCb";
             IsProfessionCb.Size = new Size(92, 19);
-            IsProfessionCb.TabIndex = 11;
+            IsProfessionCb.TabIndex = 6;
             IsProfessionCb.Text = "Is Profession";
             IsProfessionCb.UseVisualStyleBackColor = true;
             // 
@@ -126,14 +126,14 @@
             BaseStaminaNud.Location = new Point(95, 76);
             BaseStaminaNud.Name = "BaseStaminaNud";
             BaseStaminaNud.Size = new Size(120, 23);
-            BaseStaminaNud.TabIndex = 12;
+            BaseStaminaNud.TabIndex = 3;
             // 
             // BaseHealthNud
             // 
             BaseHealthNud.Location = new Point(95, 48);
             BaseHealthNud.Name = "BaseHealthNud";
             BaseHealthNud.Size = new Size(120, 23);
-            BaseHealthNud.TabIndex = 13;
+            BaseHealthNud.TabIndex = 2;
             // 
             // label4
             // 
@@ -150,7 +150,7 @@
             DescRtxt.Name = "DescRtxt";
             DescRtxt.ScrollBars = RichTextBoxScrollBars.Vertical;
             DescRtxt.Size = new Size(188, 96);
-            DescRtxt.TabIndex = 15;
+            DescRtxt.TabIndex = 1;
             DescRtxt.Text = "";
             // 
             // groupBox1
@@ -177,6 +177,38 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Create Class";
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(23, 140);
+            label6.Name = "label6";
+            label6.Size = new Size(66, 15);
+            label6.TabIndex = 19;
+            label6.Text = "NatArmor :";
+            // 
+            // ArmorNud
+            // 
+            ArmorNud.Location = new Point(95, 107);
+            ArmorNud.Name = "ArmorNud";
+            ArmorNud.Size = new Size(120, 23);
+            ArmorNud.TabIndex = 4;
+            // 
+            // NatArmorNud
+            // 
+            NatArmorNud.Location = new Point(95, 135);
+            NatArmorNud.Name = "NatArmorNud";
+            NatArmorNud.Size = new Size(120, 23);
+            NatArmorNud.TabIndex = 5;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(42, 109);
+            label7.Name = "label7";
+            label7.Size = new Size(47, 15);
+            label7.TabIndex = 16;
+            label7.Text = "Armor :";
+            // 
             // label3
             // 
             label3.AutoSize = true;
@@ -198,6 +230,7 @@
             ClassDgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             ClassDgv.Size = new Size(426, 231);
             ClassDgv.TabIndex = 33;
+            ClassDgv.TabStop = false;
             // 
             // SkillLoadName
             // 
@@ -234,38 +267,6 @@
             sqliteCommand1.Transaction = null;
             sqliteCommand1.UpdatedRowSource = System.Data.UpdateRowSource.None;
             // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(23, 140);
-            label6.Name = "label6";
-            label6.Size = new Size(66, 15);
-            label6.TabIndex = 19;
-            label6.Text = "NatArmor :";
-            // 
-            // ArmorNud
-            // 
-            ArmorNud.Location = new Point(95, 107);
-            ArmorNud.Name = "ArmorNud";
-            ArmorNud.Size = new Size(120, 23);
-            ArmorNud.TabIndex = 18;
-            // 
-            // NatArmorNud
-            // 
-            NatArmorNud.Location = new Point(95, 135);
-            NatArmorNud.Name = "NatArmorNud";
-            NatArmorNud.Size = new Size(120, 23);
-            NatArmorNud.TabIndex = 17;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(42, 109);
-            label7.Name = "label7";
-            label7.Size = new Size(47, 15);
-            label7.TabIndex = 16;
-            label7.Text = "Armor :";
-            // 
             // ClassLoad
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -280,9 +281,9 @@
             ((System.ComponentModel.ISupportInitialize)BaseHealthNud).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)ClassDgv).EndInit();
             ((System.ComponentModel.ISupportInitialize)ArmorNud).EndInit();
             ((System.ComponentModel.ISupportInitialize)NatArmorNud).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ClassDgv).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
