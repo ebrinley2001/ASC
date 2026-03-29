@@ -48,7 +48,7 @@
             SaveBtn.Location = new Point(350, 99);
             SaveBtn.Name = "SaveBtn";
             SaveBtn.Size = new Size(75, 23);
-            SaveBtn.TabIndex = 0;
+            SaveBtn.TabIndex = 2;
             SaveBtn.Text = "Save";
             SaveBtn.UseVisualStyleBackColor = true;
             // 
@@ -75,7 +75,7 @@
             NameTxt.Location = new Point(59, 22);
             NameTxt.Name = "NameTxt";
             NameTxt.Size = new Size(100, 23);
-            NameTxt.TabIndex = 3;
+            NameTxt.TabIndex = 0;
             // 
             // LogLbl
             // 
@@ -92,7 +92,7 @@
             DescRtxt.Name = "DescRtxt";
             DescRtxt.ScrollBars = RichTextBoxScrollBars.Vertical;
             DescRtxt.Size = new Size(210, 71);
-            DescRtxt.TabIndex = 8;
+            DescRtxt.TabIndex = 1;
             DescRtxt.Text = "";
             // 
             // groupBox1
@@ -131,6 +131,7 @@
             RaceDgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             RaceDgv.Size = new Size(430, 231);
             RaceDgv.TabIndex = 35;
+            RaceDgv.TabStop = false;
             // 
             // RaceLoadName
             // 

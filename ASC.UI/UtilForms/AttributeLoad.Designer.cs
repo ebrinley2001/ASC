@@ -48,7 +48,7 @@
             SaveBtn.Location = new Point(350, 99);
             SaveBtn.Name = "SaveBtn";
             SaveBtn.Size = new Size(75, 23);
-            SaveBtn.TabIndex = 0;
+            SaveBtn.TabIndex = 2;
             SaveBtn.Text = "Save";
             SaveBtn.UseVisualStyleBackColor = true;
             // 
@@ -75,7 +75,7 @@
             NameTxt.Location = new Point(59, 22);
             NameTxt.Name = "NameTxt";
             NameTxt.Size = new Size(100, 23);
-            NameTxt.TabIndex = 3;
+            NameTxt.TabIndex = 0;
             // 
             // LogLbl
             // 
@@ -91,7 +91,7 @@
             DescRtxt.Location = new Point(219, 22);
             DescRtxt.Name = "DescRtxt";
             DescRtxt.Size = new Size(206, 71);
-            DescRtxt.TabIndex = 8;
+            DescRtxt.TabIndex = 1;
             DescRtxt.Text = "";
             // 
             // groupBox1
@@ -130,6 +130,7 @@
             AttributeDgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             AttributeDgv.Size = new Size(427, 231);
             AttributeDgv.TabIndex = 35;
+            AttributeDgv.TabStop = false;
             // 
             // AttributeLoadName
             // 

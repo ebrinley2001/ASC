@@ -56,10 +56,10 @@
             XpCostNud = new NumericUpDown();
             DescRtxt = new RichTextBox();
             SkillDgv = new DataGridView();
-            groupBox5 = new GroupBox();
-            label3 = new Label();
             SkillLoadName = new DataGridViewTextBoxColumn();
             SkillLoadXpCost = new DataGridViewTextBoxColumn();
+            groupBox5 = new GroupBox();
+            label3 = new Label();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -75,7 +75,7 @@
             SaveBtn.Location = new Point(333, 332);
             SaveBtn.Name = "SaveBtn";
             SaveBtn.Size = new Size(75, 23);
-            SaveBtn.TabIndex = 0;
+            SaveBtn.TabIndex = 12;
             SaveBtn.Text = "Save";
             SaveBtn.UseVisualStyleBackColor = true;
             // 
@@ -102,7 +102,7 @@
             NameTxt.Location = new Point(92, 22);
             NameTxt.Name = "NameTxt";
             NameTxt.Size = new Size(100, 23);
-            NameTxt.TabIndex = 3;
+            NameTxt.TabIndex = 0;
             // 
             // LogLbl
             // 
@@ -155,7 +155,7 @@
             AttributeSkillCb.Location = new Point(6, 25);
             AttributeSkillCb.Name = "AttributeSkillCb";
             AttributeSkillCb.Size = new Size(97, 19);
-            AttributeSkillCb.TabIndex = 16;
+            AttributeSkillCb.TabIndex = 8;
             AttributeSkillCb.Text = "Attribute Skill";
             AttributeSkillCb.UseVisualStyleBackColor = true;
             // 
@@ -165,7 +165,7 @@
             RacialSkillCb.Location = new Point(109, 25);
             RacialSkillCb.Name = "RacialSkillCb";
             RacialSkillCb.Size = new Size(81, 19);
-            RacialSkillCb.TabIndex = 17;
+            RacialSkillCb.TabIndex = 9;
             RacialSkillCb.Text = "Racial Skill";
             RacialSkillCb.UseVisualStyleBackColor = true;
             // 
@@ -175,7 +175,7 @@
             CombatSkillCb.Location = new Point(196, 25);
             CombatSkillCb.Name = "CombatSkillCb";
             CombatSkillCb.Size = new Size(93, 19);
-            CombatSkillCb.TabIndex = 18;
+            CombatSkillCb.TabIndex = 11;
             CombatSkillCb.Text = "Combat Skill";
             CombatSkillCb.UseVisualStyleBackColor = true;
             // 
@@ -212,7 +212,7 @@
             ClassCBox.Location = new Point(71, 22);
             ClassCBox.Name = "ClassCBox";
             ClassCBox.Size = new Size(121, 23);
-            ClassCBox.TabIndex = 23;
+            ClassCBox.TabIndex = 4;
             // 
             // AttributeCBox
             // 
@@ -220,7 +220,7 @@
             AttributeCBox.Location = new Point(71, 51);
             AttributeCBox.Name = "AttributeCBox";
             AttributeCBox.Size = new Size(121, 23);
-            AttributeCBox.TabIndex = 24;
+            AttributeCBox.TabIndex = 5;
             // 
             // RaceCBox
             // 
@@ -228,7 +228,7 @@
             RaceCBox.Location = new Point(71, 80);
             RaceCBox.Name = "RaceCBox";
             RaceCBox.Size = new Size(121, 23);
-            RaceCBox.TabIndex = 25;
+            RaceCBox.TabIndex = 10;
             // 
             // groupBox1
             // 
@@ -241,7 +241,7 @@
             groupBox1.Location = new Point(6, 158);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(200, 113);
-            groupBox1.TabIndex = 26;
+            groupBox1.TabIndex = 27;
             groupBox1.TabStop = false;
             groupBox1.Text = "Attachments";
             // 
@@ -253,7 +253,7 @@
             groupBox2.Location = new Point(6, 277);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(290, 52);
-            groupBox2.TabIndex = 27;
+            groupBox2.TabIndex = 29;
             groupBox2.TabStop = false;
             groupBox2.Text = "Classifications";
             // 
@@ -276,7 +276,7 @@
             LimitCBox.Location = new Point(59, 51);
             LimitCBox.Name = "LimitCBox";
             LimitCBox.Size = new Size(121, 23);
-            LimitCBox.TabIndex = 25;
+            LimitCBox.TabIndex = 7;
             // 
             // PrereqCBox
             // 
@@ -284,7 +284,7 @@
             PrereqCBox.Location = new Point(59, 19);
             PrereqCBox.Name = "PrereqCBox";
             PrereqCBox.Size = new Size(121, 23);
-            PrereqCBox.TabIndex = 24;
+            PrereqCBox.TabIndex = 6;
             // 
             // groupBox4
             // 
@@ -299,7 +299,7 @@
             groupBox4.Location = new Point(6, 22);
             groupBox4.Name = "groupBox4";
             groupBox4.Size = new Size(406, 130);
-            groupBox4.TabIndex = 29;
+            groupBox4.TabIndex = 26;
             groupBox4.TabStop = false;
             groupBox4.Text = "Details";
             // 
@@ -308,7 +308,7 @@
             StaminaCostNud.Location = new Point(92, 80);
             StaminaCostNud.Name = "StaminaCostNud";
             StaminaCostNud.Size = new Size(100, 23);
-            StaminaCostNud.TabIndex = 12;
+            StaminaCostNud.TabIndex = 3;
             // 
             // XpCostNud
             // 
@@ -316,7 +316,7 @@
             XpCostNud.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             XpCostNud.Name = "XpCostNud";
             XpCostNud.Size = new Size(100, 23);
-            XpCostNud.TabIndex = 11;
+            XpCostNud.TabIndex = 2;
             // 
             // DescRtxt
             // 
@@ -324,7 +324,7 @@
             DescRtxt.Name = "DescRtxt";
             DescRtxt.ScrollBars = RichTextBoxScrollBars.Vertical;
             DescRtxt.Size = new Size(136, 96);
-            DescRtxt.TabIndex = 10;
+            DescRtxt.TabIndex = 1;
             DescRtxt.Text = "";
             // 
             // SkillDgv
@@ -339,6 +339,21 @@
             SkillDgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             SkillDgv.Size = new Size(418, 231);
             SkillDgv.TabIndex = 30;
+            SkillDgv.TabStop = false;
+            // 
+            // SkillLoadName
+            // 
+            SkillLoadName.DataPropertyName = "Name";
+            SkillLoadName.HeaderText = "Name";
+            SkillLoadName.Name = "SkillLoadName";
+            SkillLoadName.ReadOnly = true;
+            // 
+            // SkillLoadXpCost
+            // 
+            SkillLoadXpCost.DataPropertyName = "XPCost";
+            SkillLoadXpCost.HeaderText = "XpCost";
+            SkillLoadXpCost.Name = "SkillLoadXpCost";
+            SkillLoadXpCost.ReadOnly = true;
             // 
             // groupBox5
             // 
@@ -363,20 +378,6 @@
             label3.Size = new Size(49, 15);
             label3.TabIndex = 32;
             label3.Text = "Browser";
-            // 
-            // SkillLoadName
-            // 
-            SkillLoadName.DataPropertyName = "Name";
-            SkillLoadName.HeaderText = "Name";
-            SkillLoadName.Name = "SkillLoadName";
-            SkillLoadName.ReadOnly = true;
-            // 
-            // SkillLoadXpCost
-            // 
-            SkillLoadXpCost.DataPropertyName = "XPCost";
-            SkillLoadXpCost.HeaderText = "XpCost";
-            SkillLoadXpCost.Name = "SkillLoadXpCost";
-            SkillLoadXpCost.ReadOnly = true;
             // 
             // SkillLoad
             // 
