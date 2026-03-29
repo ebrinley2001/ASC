@@ -35,13 +35,6 @@ jobs:
              
       - name: Build Installer
         run: dotnet build ASC.Installer/ASC.Installer.csproj -c Release --no-restore
-
-      - name: Set Version
-        run: |
-              $fileInfo = Get-Item -Path "ASC.Installer/bin/Release/net472/staging/ASC.UI.exe"
-              $version = $fileInfo.VersionInfo.ProductVersion
-              echo "The app version is: $version"
-              echo "FILE_VERSION=$version" >> "$GITHUB_ENV"
         
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v7.0.0
@@ -65,7 +58,7 @@ jobs:
             uses: softprops/action-gh-release@v2
             with:
               files: staging/*
-              tag_name: ASC-${{ github.ref_name }}-v${{ env.FILE_VERSION }}-${{ github.run_id }}
+              tag_name: ASC-${{ github.ref_name }}-${{ github.run_id }}
               prerelease: ${{ github.event_name == 'workflow_dispatch' }}
             env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
