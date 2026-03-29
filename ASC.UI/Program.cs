@@ -17,9 +17,15 @@ namespace ASC.UI
         [STAThread]
         static void Main(string[] args)
         {
+#if DEBUG
+            IConfiguration config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.development.json")
+                .Build();
+#else
             IConfiguration config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
+#endif
 
 
             Application.SetHighDpiMode(HighDpiMode.SystemAware);

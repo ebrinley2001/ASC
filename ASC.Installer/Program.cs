@@ -1,32 +1,63 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
 using WixSharp;
-using WixSharp.Bootstrapper;
-using WixSharp.CommonTasks;
+using WixSharp.Forms;
 using File = WixSharp.File;
 
 namespace ASC.Installer
 {
     public class Program
     {
+        const string BUILD_COMMAND = @"dotnet build ..\ASC.UI\ASC.UI.csproj -c Release --self-contained";
+        const string RELEASE_OUTPUT = @"..\ASC.UI\bin\Release\net8.0-windows\win-x64";
+        const string STAGING_OUTPUT = @"staging";
+        const string APP_NAME = "Aelimor Sheet Creator";
+        const string EXE_NAME = "ASC.UI.exe";
+
+        const string PROGRAM_INSTALL_DIR = @"%ProgramFiles64%\ASC";
+        const string DATA_INSTALL_DIR = @"%CommonAppData%\ASC";
+        const string OUTPUT_FOLDER = "build";
+
         static void Main()
         {
-            const string APP_NAME = "Aelimor Sheet Creator";
-            const string INSTALL_DIR = @"%ProgramFiles%\ASC";
-            const string EXE_NAME = "ASC.UI.exe";
+            string buildDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string stagingDir = Path.Combine(buildDir, STAGING_OUTPUT);
 
-            const string OUTPUT_FOLDER = "build";
+            BuildApp(BUILD_COMMAND, buildDir, stagingDir);
 
             var project = new ManagedProject(APP_NAME,
-                new Dir(INSTALL_DIR,
-                    new Files(@"..\ASC.UI\bin\Release\net8.0-windows\*.*"),
+                new Dir(PROGRAM_INSTALL_DIR,
+                    new Files(Path.Combine(stagingDir, "*.*"))
+                ),
+                new Dir(DATA_INSTALL_DIR,
+                    new DirPermission("Everyone", GenericPermission.All),
                     new File(@"..\Resources\ascdb.db")
                 )
             );
 
+            FileVersionInfo info = FileVersionInfo.GetVersionInfo(Path.Combine(stagingDir, EXE_NAME));
+
             project.Platform = Platform.x64;
+            project.GUID = new Guid("f9410119-7271-4c59-a59a-a54bd914e9cc");
+            project.Version = new Version(info.FileVersion);
+            project.ControlPanelInfo.Manufacturer = "Ethan B";
+            project.ControlPanelInfo.Contact = "Ethan B";
+
+            project.ManagedUI = new ManagedUI();
+            project.ManagedUI.InstallDialogs
+                .Add(Dialogs.Welcome)
+                .Add(Dialogs.Licence)
+                .Add(Dialogs.InstallDir)
+                .Add(Dialogs.Progress)
+                .Add(Dialogs.Exit);
+
+            project.ManagedUI.ModifyDialogs
+                .Add(Dialogs.MaintenanceType)
+                .Add(Dialogs.Features)
+                .Add(Dialogs.Progress)
+                .Add(Dialogs.Exit);
 
             var exe = project.ResolveWildCards().FindFile(f => f.Name.EndsWith(EXE_NAME)).First();
             exe.Shortcuts = new[]
@@ -34,91 +65,38 @@ namespace ASC.Installer
                     new FileShortcut($"{APP_NAME}.exe", "%Desktop%")
                 };
 
-            project.GUID = new Guid("ad39908c-ba52-4073-8ead-248ff3f7c2e9");
-
             string productMsi = project.BuildMsi(Path.Combine(OUTPUT_FOLDER, "ASC Installer.msi"));
-
-            var bootstrapper = new Bundle(APP_NAME,
-                Net8(),
-                Net8Desktop(),
-                new MsiPackage(productMsi)
-            );
-
-            bootstrapper.Include(WixExtension.Util);
-
-            bootstrapper.AddWixFragment("Wix/Bundle",
-                new UtilRegistrySearch()
-                {
-                    Root = RegistryHive.LocalMachine,
-                    Key = @"SOFTWARE\dotnet\Setup\InstalledVersions\x64\sharedhost",
-                    Value = "Version",
-                    Win64 = true,
-                    Result = SearchResult.value,
-                    Variable = "Net8"
-                }
-            );
-
-            bootstrapper.AddWixFragment("Wix/Bundle",
-                new UtilRegistrySearch()
-                {
-                    Root = RegistryHive.LocalMachine,
-                    Key = @"SOFTWARE\WOW6432Node\dotnet\Setup\InstalledVersions\x64\sharedfx\Microsoft.WindowsDesktop.App",
-                    Value = "8.0.24",
-                    Win64 = true,
-                    Result = SearchResult.exists,
-                    Variable = "Net8Desktop"
-                }
-            );
-
-            bootstrapper.SetVersionFromFile(exe.Name);
-
-            bootstrapper.Build(Path.Combine(OUTPUT_FOLDER, "ASC Installer.exe"));
         }
 
-        private static ExePackage Net8Desktop()
+        private static void BuildApp(string command, string buildDir, string stagingDir)
         {
-            string currentNet8Desktopinstaller =
-               @"https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/8.0.24/windowsdesktop-runtime-8.0.24-win-x64.exe";
-            string Net8Installer = "Net8-desktop.exe";
-            using (var client = new WebClient())
+            using (Process process = new Process())
             {
-                client.DownloadFile(currentNet8Desktopinstaller, Net8Installer);
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                startInfo.FileName = "cmd.exe";
+                startInfo.Arguments = "/c " + command;
+                startInfo.UseShellExecute = false;
+                startInfo.RedirectStandardOutput = true;
+                startInfo.CreateNoWindow = true;
+
+                process.StartInfo = startInfo;
+                process.Start();
+
+                string result = process.StandardOutput.ReadToEnd();
+                process.WaitForExit();
+
+                Console.WriteLine(result);
             }
-            ExePackage Net8exe = new ExePackage(Net8Installer)
-            {
-                Compressed = true,
-                Vital = true,
-                Name = Net8Installer,
-                DetectCondition = "Net8Desktop",
-                PerMachine = true,
-                Permanent = false,
-                UninstallArguments = "/uninstall /quiet"
-            };
 
-            return Net8exe;
-        }
-
-        private static ExePackage Net8()
-        {
-            string currentNet8installer =
-               @"https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.418/dotnet-sdk-8.0.418-win-x64.exe";
-            string Net8Installer = "Net8.exe";
-            using (var client = new WebClient())
+            if (Directory.Exists(RELEASE_OUTPUT))
             {
-                client.DownloadFile(currentNet8installer, Net8Installer);
+                Console.WriteLine(buildDir);
+                if (Directory.Exists(stagingDir))
+                {
+                    Directory.Delete(stagingDir, true);
+                }
+                Directory.Move(RELEASE_OUTPUT, stagingDir);
             }
-            ExePackage Net8exe = new ExePackage(Net8Installer)
-            {
-                Compressed = true,
-                Vital = true,
-                Name = Net8Installer,
-                DetectCondition = "Net8 >= \"8.0.0.0\"",
-                PerMachine = true,
-                Permanent = false,
-                UninstallArguments = "/uninstall /quiet"
-            };
-
-            return Net8exe;
         }
     }
 }
