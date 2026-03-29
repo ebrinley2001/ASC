@@ -38,7 +38,7 @@ jobs:
 
       - name: Set Version
         run: |
-              $fileInfo = Get-Item -Path "ASC.Installer/bin/Release/net472/ASC.UI.exe"
+              $fileInfo = Get-Item -Path "ASC.Installer/bin/Release/net472/staging/ASC.UI.exe"
               $version = $fileInfo.VersionInfo.ProductVersion
               echo "The app version is: $version"
               echo "FILE_VERSION=$version" >> "$GITHUB_ENV"
