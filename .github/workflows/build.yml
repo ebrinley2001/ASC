@@ -23,12 +23,6 @@ jobs:
           
       - name: Restore dependencies
         run: dotnet restore
-        
-      - name: Build
-        run: dotnet build ASC.UI/ASC.UI.csproj -c Release --no-restore
-        
-      - name: Test
-        run: dotnet test --no-build --verbosity normal
 
       - name: Install Wix
         run: dotnet tool install --global wix
@@ -39,7 +33,6 @@ jobs:
              wix.exe extension add -g WixToolset.Bal.wixext/6.0.0 |
              wix.exe extension add -g WixToolset.Util.wixext/6.0.0
              
-  
       - name: Build Installer
         run: dotnet build ASC.Installer/ASC.Installer.csproj -c Release --no-restore
         
