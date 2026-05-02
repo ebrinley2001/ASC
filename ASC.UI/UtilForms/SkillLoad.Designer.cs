@@ -52,7 +52,6 @@
             LimitCBox = new ComboBox();
             PrereqCBox = new ComboBox();
             groupBox4 = new GroupBox();
-            StaminaCostNud = new NumericUpDown();
             XpCostNud = new NumericUpDown();
             DescRtxt = new RichTextBox();
             SkillDgv = new DataGridView();
@@ -60,11 +59,11 @@
             SkillLoadXpCost = new DataGridViewTextBoxColumn();
             groupBox5 = new GroupBox();
             label3 = new Label();
+            StaminaCostTxt = new TextBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
             groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)StaminaCostNud).BeginInit();
             ((System.ComponentModel.ISupportInitialize)XpCostNud).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SkillDgv).BeginInit();
             groupBox5.SuspendLayout();
@@ -288,7 +287,7 @@
             // 
             // groupBox4
             // 
-            groupBox4.Controls.Add(StaminaCostNud);
+            groupBox4.Controls.Add(StaminaCostTxt);
             groupBox4.Controls.Add(XpCostNud);
             groupBox4.Controls.Add(DescRtxt);
             groupBox4.Controls.Add(NameTxt);
@@ -302,13 +301,6 @@
             groupBox4.TabIndex = 26;
             groupBox4.TabStop = false;
             groupBox4.Text = "Details";
-            // 
-            // StaminaCostNud
-            // 
-            StaminaCostNud.Location = new Point(92, 80);
-            StaminaCostNud.Name = "StaminaCostNud";
-            StaminaCostNud.Size = new Size(100, 23);
-            StaminaCostNud.TabIndex = 3;
             // 
             // XpCostNud
             // 
@@ -379,6 +371,13 @@
             label3.TabIndex = 32;
             label3.Text = "Browser";
             // 
+            // StaminaCostTxt
+            // 
+            StaminaCostTxt.Location = new Point(92, 79);
+            StaminaCostTxt.Name = "StaminaCostTxt";
+            StaminaCostTxt.Size = new Size(100, 23);
+            StaminaCostTxt.TabIndex = 10;
+            // 
             // SkillLoad
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -397,7 +396,6 @@
             groupBox3.PerformLayout();
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)StaminaCostNud).EndInit();
             ((System.ComponentModel.ISupportInitialize)XpCostNud).EndInit();
             ((System.ComponentModel.ISupportInitialize)SkillDgv).EndInit();
             groupBox5.ResumeLayout(false);
@@ -433,12 +431,12 @@
         private ComboBox PrereqCBox;
         private GroupBox groupBox4;
         private RichTextBox DescRtxt;
-        private NumericUpDown StaminaCostNud;
         private NumericUpDown XpCostNud;
         private DataGridView SkillDgv;
         private GroupBox groupBox5;
         private Label label3;
         private DataGridViewTextBoxColumn SkillLoadName;
         private DataGridViewTextBoxColumn SkillLoadXpCost;
+        private TextBox StaminaCostTxt;
     }
 }
