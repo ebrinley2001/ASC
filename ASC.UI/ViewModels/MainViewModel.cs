@@ -1,11 +1,12 @@
-﻿using ASC.UI.Helpers;
+﻿using ASC.Models;
+using ASC.UI.Helpers;
 using ASC.UI.UtilForms;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows.Input;
 
 namespace ASC.UI.ViewModels
 {
-    public class MainViewModel : NotifiableViewModel
+    public class MainViewModel : NotfiableObject
     {
         private CharacterCreationForm _characterCreationForm;
         private AttributeLoad _attributeLoadForm;

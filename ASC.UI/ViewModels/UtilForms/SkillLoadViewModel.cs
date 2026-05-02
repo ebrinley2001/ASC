@@ -1,5 +1,5 @@
-﻿using ASC.BC;
-using ASC.BC.Interfaces;
+﻿using ASC.BC.Interfaces;
+using ASC.Models;
 using ASC.Models.DB;
 using ASC.Models.Enums;
 using ASC.UI.Helpers;
@@ -9,7 +9,7 @@ using Attribute = ASC.Models.DB.Attribute;
 
 namespace ASC.UI.ViewModels.UtilForms
 {
-    public class SkillLoadViewModel : NotifiableViewModel
+    public class SkillLoadViewModel : NotfiableObject
     {
         private ISkillBC _skillBC;
 
@@ -220,7 +220,7 @@ namespace ASC.UI.ViewModels.UtilForms
             {
                 _skill.Attribute = null;
             }
-            if ( _skill.Race?.Id == -1)
+            if (_skill.Race?.Id == -1)
             {
                 _skill.Race = null;
             }

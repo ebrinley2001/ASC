@@ -70,7 +70,7 @@ namespace ASC.UI
 
             ViewModel.SelectedSkills.ListChanged += new ListChangedEventHandler(BindNewSkill);
             ViewModel.SelectedClasses.ListChanged += new ListChangedEventHandler(OnClassChange);
-            ViewModel.SelectedAttributes.ListChanged += new ListChangedEventHandler(ViewModel.CheckCanAddAttributes);
+            ViewModel.SelectedAttributes.ListChanged += new ListChangedEventHandler(OnAttributeChange);
         }
 
         private void AddAttribute()
@@ -118,11 +118,12 @@ namespace ASC.UI
             ViewModel.SetAvailibleSkills();
             SelectionForm<Skill> form = new SelectionForm<Skill>(
                 ViewModel.Skills.ToList(),
-                a => new string[] { a.Name, a.XPCost.ToString() },
+                a => new string[] { a.Name, a.XPCost.ToString(), a.GetSource() },
                 new Dictionary<string, int>()
                 {
                     { "Name", -1 },
-                    { "XpCost", -1 }
+                    { "XpCost", 50 },
+                    { "Source", 100 }
                 }
                 );
 
@@ -190,6 +191,13 @@ namespace ASC.UI
         {
             ViewModel.CheckCanAddClasses();
             ViewModel.CalculateStats();
+        }
+
+        private void OnAttributeChange(object sender, EventArgs e)
+        {
+            ViewModel.CheckCanAddAttributes();
+            ViewModel.RecalculateXpTotals();
+            SkillsDgv.Refresh();
         }
 
         private void Export()
