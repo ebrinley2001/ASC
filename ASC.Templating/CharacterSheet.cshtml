@@ -2,7 +2,7 @@
 
 @{
     var passiveSkills = Model.Skills.Where(s => s.Value.IsCombatSkill && s.Value.StaminaCost == null).ToList();
-    var staminaSkills = Model.Skills.Where(s => s.Value.StaminaCost != null).ToList();
+    var staminaSkills = Model.Skills.Where(s => !s.Value.IsCombatSkill && s.Value.StaminaCost != null).ToList();
     var generalSkills = Model.Skills.Where(s => s.Value.Class == null).ToList();
 }
 
