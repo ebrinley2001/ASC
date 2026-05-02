@@ -1,4 +1,5 @@
 ﻿using ASC.BC.Interfaces;
+using ASC.Models;
 using ASC.Models.DB;
 using ASC.UI.Helpers;
 using System.ComponentModel;
@@ -6,7 +7,7 @@ using System.Windows.Input;
 
 namespace ASC.UI.ViewModels.UtilForms
 {
-    public class ClassLoadViewModel : NotifiableViewModel
+    public class ClassLoadViewModel : NotfiableObject
     {
         private IClassBC _classBC;
         private Class _class;

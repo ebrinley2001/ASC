@@ -16,6 +16,8 @@ namespace ASC.BC.SkillHelpers
                     return amount == 1;
                 case Limit.Twice:
                     return amount <= 2;
+                case Limit.Three:
+                    return amount <= 3;
 
                 case Limit.OncePerTwoLevels:
                     return amount <= Math.Max(1, character.Level.Id / 2);
@@ -30,6 +32,9 @@ namespace ASC.BC.SkillHelpers
                     return amount <= character.Level.Id * 2;
                 case Limit.ThreePerLevel:
                     return amount <= character.Level.Id * 3;
+
+                case Limit.OnePerTwoHp:
+                    return amount <= character.Hp / 2;
             }
             return false;
         }

@@ -1,5 +1,5 @@
-﻿using ASC.BC;
-using ASC.BC.Interfaces;
+﻿using ASC.BC.Interfaces;
+using ASC.Models;
 using ASC.Models.DB;
 using ASC.UI.Helpers;
 using System.ComponentModel;
@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace ASC.UI.ViewModels.UtilForms
 {
-    public class RaceLoadViewModel : NotifiableViewModel
+    public class RaceLoadViewModel : NotfiableObject
     {
         private IRaceBC _raceBC;
 

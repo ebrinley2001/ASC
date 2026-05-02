@@ -5,14 +5,17 @@
         None = 0,
         Once = 1,
         Twice = 2,
+        Three = 3,
 
-        OncePerLevel = 3,
-        OncePerTwoLevels = 4,
-        OncePerThreeLevels = 5,
-        OncePerFourLevels = 6,
-        OncePerFiveLevels = 7,
+        OncePerLevel = 4,
+        OncePerTwoLevels = 5,
+        OncePerThreeLevels = 6,
+        OncePerFourLevels = 7,
+        OncePerFiveLevels = 8,
 
-        TwoPerLevel = 8,
-        ThreePerLevel = 9,
+        TwoPerLevel = 9,
+        ThreePerLevel = 10,
+
+        OnePerTwoHp = 11,
     }
 }
