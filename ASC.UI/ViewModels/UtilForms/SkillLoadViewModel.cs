@@ -55,7 +55,7 @@ namespace ASC.UI.ViewModels.UtilForms
             }
         }
 
-        public int StaminaCost
+        public string StaminaCost
         {
             get => _skill.StaminaCost;
             set
@@ -223,6 +223,11 @@ namespace ASC.UI.ViewModels.UtilForms
             if (_skill.Race?.Id == -1)
             {
                 _skill.Race = null;
+            }
+
+            if (string.IsNullOrEmpty(_skill.StaminaCost))
+            {
+                _skill.StaminaCost = null;
             }
 
             int result = _skillBC.Create(_skill);

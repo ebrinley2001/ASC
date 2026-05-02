@@ -1,8 +1,8 @@
 ﻿@model ASC.Models.Character
 
 @{
-    var passiveSkills = Model.Skills.Where(s => s.Value.IsCombatSkill && s.Value.StaminaCost == 0).ToList();
-    var staminaSkills = Model.Skills.Where(s => s.Value.StaminaCost > 0).ToList();
+    var passiveSkills = Model.Skills.Where(s => s.Value.IsCombatSkill && s.Value.StaminaCost == null).ToList();
+    var staminaSkills = Model.Skills.Where(s => !s.Value.IsCombatSkill && s.Value.StaminaCost != null).ToList();
     var generalSkills = Model.Skills.Where(s => s.Value.Class == null).ToList();
 }
 
