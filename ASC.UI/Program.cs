@@ -42,6 +42,8 @@ namespace ASC.UI
             serviceCollection.AddScoped<IRaceBC, RaceBC>();
             serviceCollection.AddScoped<ISkillBC, SkillBC>();
             serviceCollection.AddScoped<ILevelBC, LevelBC>();
+            serviceCollection.AddScoped<IBonusBC, BonusBC>();
+            serviceCollection.AddScoped<IBonusItemBC, BonusItemBC>();
 
             //Forms
             serviceCollection.AddTransient<Main>();
@@ -51,6 +53,8 @@ namespace ASC.UI
             serviceCollection.AddTransient<ClassLoad>();
             serviceCollection.AddTransient<RaceLoad>();
             serviceCollection.AddTransient<SkillLoad>();
+            serviceCollection.AddTransient<BonusLoad>();
+            serviceCollection.AddTransient<BonusItemLoad>();
 
             ServiceProvider = serviceCollection.BuildServiceProvider();
 

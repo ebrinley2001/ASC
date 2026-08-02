@@ -34,6 +34,8 @@
             RaceBtn = new Button();
             ClassBtn = new Button();
             AttributeBtn = new Button();
+            BonusBtn = new Button();
+            BonusItemBtn = new Button();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -48,13 +50,15 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(BonusItemBtn);
+            groupBox1.Controls.Add(BonusBtn);
             groupBox1.Controls.Add(SkillBtn);
             groupBox1.Controls.Add(RaceBtn);
             groupBox1.Controls.Add(ClassBtn);
             groupBox1.Controls.Add(AttributeBtn);
             groupBox1.Location = new Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(83, 135);
+            groupBox1.Size = new Size(163, 135);
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "Edit Data";
@@ -95,6 +99,24 @@
             AttributeBtn.Text = "Attribute";
             AttributeBtn.UseVisualStyleBackColor = true;
             // 
+            // BonusBtn
+            // 
+            BonusBtn.Location = new Point(84, 19);
+            BonusBtn.Name = "BonusBtn";
+            BonusBtn.Size = new Size(75, 23);
+            BonusBtn.TabIndex = 4;
+            BonusBtn.Text = "Bonuses";
+            BonusBtn.UseVisualStyleBackColor = true;
+            // 
+            // BonusItemBtn
+            // 
+            BonusItemBtn.Location = new Point(84, 48);
+            BonusItemBtn.Name = "BonusItemBtn";
+            BonusItemBtn.Size = new Size(75, 23);
+            BonusItemBtn.TabIndex = 5;
+            BonusItemBtn.Text = "BonusItem";
+            BonusItemBtn.UseVisualStyleBackColor = true;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -115,5 +137,7 @@
         private Button RaceBtn;
         private Button ClassBtn;
         private Button AttributeBtn;
+        private Button BonusItemBtn;
+        private Button BonusBtn;
     }
 }

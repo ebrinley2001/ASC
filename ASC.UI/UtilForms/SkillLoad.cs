@@ -1,7 +1,6 @@
 ﻿using ASC.BC.Interfaces;
 using ASC.UI.Helpers;
 using ASC.UI.ViewModels.UtilForms;
-using System.ComponentModel;
 
 namespace ASC.UI.UtilForms
 {
@@ -23,7 +22,7 @@ namespace ASC.UI.UtilForms
             NameTxt.Bind(c => c.Text, ViewModel, v => v.Name);
             DescRtxt.Bind(c => c.Text, ViewModel, v => v.Desc);
             XpCostNud.Bind(c => c.Text, ViewModel, v => v.XpCost);
-            StaminaCostNud.Bind(c => c.Text, ViewModel, v => v.StaminaCost);
+            StaminaCostTxt.Bind(c => c.Text, ViewModel, v => v.StaminaCost);
             LogLbl.Bind(c => c.Text, ViewModel, v => v.Log);
 
             AttributeSkillCb.Bind(ViewModel, v => v.IsAttributeSkill);

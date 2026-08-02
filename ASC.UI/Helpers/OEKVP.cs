@@ -1,14 +1,14 @@
-﻿using ASC.UI.ViewModels;
+﻿using ASC.Models;
 
 namespace ASC.UI.Helpers
 {
     //Observable Editable KeyValuePair
-    public class OEKVP<TKey, TValue> : NotifiableViewModel
+    public class OEKVP<TKey, TValue> : NotfiableObject
     {
         private TKey key;
         private TValue value;
 
-        public TKey Key 
+        public TKey Key
         {
             get => key;
             set => SetField(ref key, value);

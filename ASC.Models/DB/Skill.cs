@@ -10,7 +10,7 @@ namespace ASC.Models.DB
         public string Name { get; set; }
         public string? Description { get; set; }
         public int XPCost { get; set; }
-        public int StaminaCost { get; set; }
+        public string? StaminaCost { get; set; }
         public Prerequisite Prerequisite { get; set; }
         public Limit Limit { get; set; }
         public bool IsAttributeSkill { get; set; }

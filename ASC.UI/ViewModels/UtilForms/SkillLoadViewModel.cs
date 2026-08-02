@@ -1,5 +1,5 @@
-﻿using ASC.BC;
-using ASC.BC.Interfaces;
+﻿using ASC.BC.Interfaces;
+using ASC.Models;
 using ASC.Models.DB;
 using ASC.Models.Enums;
 using ASC.UI.Helpers;
@@ -9,7 +9,7 @@ using Attribute = ASC.Models.DB.Attribute;
 
 namespace ASC.UI.ViewModels.UtilForms
 {
-    public class SkillLoadViewModel : NotifiableViewModel
+    public class SkillLoadViewModel : NotfiableObject
     {
         private ISkillBC _skillBC;
 
@@ -55,7 +55,7 @@ namespace ASC.UI.ViewModels.UtilForms
             }
         }
 
-        public int StaminaCost
+        public string StaminaCost
         {
             get => _skill.StaminaCost;
             set
@@ -189,7 +189,7 @@ namespace ASC.UI.ViewModels.UtilForms
 
         public ICommand SaveCommand { get; set; }
 
-        public SkillLoadViewModel(ISkillBC skillBC, IClassBC classBC, IRaceBC raceBc, IAttributeBC attribBC)
+        public SkillLoadViewModel(ISkillBC skillBC, IClassBC classBC, IRaceBC raceBC, IAttributeBC attribBC)
         {
             _skillBC = skillBC;
             _skill = new Skill();
@@ -199,7 +199,7 @@ namespace ASC.UI.ViewModels.UtilForms
             SaveCommand = new RelayCommand(Save);
 
             Classes = new BindingList<Class>(classBC.GetCollection());
-            Races = new BindingList<Race>(raceBc.GetCollection());
+            Races = new BindingList<Race>(raceBC.GetCollection());
             Attributes = new BindingList<Attribute>(attribBC.GetCollection());
 
             Classes.Insert(0, new Class() { Id = -1, Name = "Select a Class" });
@@ -220,9 +220,14 @@ namespace ASC.UI.ViewModels.UtilForms
             {
                 _skill.Attribute = null;
             }
-            if ( _skill.Race?.Id == -1)
+            if (_skill.Race?.Id == -1)
             {
                 _skill.Race = null;
+            }
+
+            if (string.IsNullOrEmpty(_skill.StaminaCost))
+            {
+                _skill.StaminaCost = null;
             }
 
             int result = _skillBC.Create(_skill);

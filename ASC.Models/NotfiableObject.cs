@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace ASC.UI.ViewModels
+namespace ASC.Models
 {
-    public class NotifiableViewModel : INotifyPropertyChanged
+    public class NotfiableObject : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 

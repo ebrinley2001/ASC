@@ -1,23 +1,28 @@
-﻿using ASC.UI.Helpers;
+﻿using ASC.Models;
+using ASC.UI.Helpers;
 using ASC.UI.UtilForms;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows.Input;
 
 namespace ASC.UI.ViewModels
 {
-    public class MainViewModel : NotifiableViewModel
+    public class MainViewModel : NotfiableObject
     {
         private CharacterCreationForm _characterCreationForm;
         private AttributeLoad _attributeLoadForm;
         private ClassLoad _classLoadForm;
         private RaceLoad _raceLoadForm;
         private SkillLoad _skillLoadForm;
+        private BonusLoad _bonusLoadForm;
+        private BonusItemLoad _bonusItemLoadForm;
 
         public ICommand CharacterFormCommand { get; set; }
         public ICommand AttributeLoadCommand { get; set; }
         public ICommand ClassLoadCommand { get; set; }
         public ICommand RaceLoadCommand { get; set; }
         public ICommand SkillLoadCommand { get; set; }
+        public ICommand BonusLoadCommand { get; set; }
+        public ICommand BonusItemLoadCommand { get; set; }
 
         public MainViewModel()
         {
@@ -26,6 +31,8 @@ namespace ASC.UI.ViewModels
             ClassLoadCommand = new RelayCommand(ShowClassLoadForm);
             RaceLoadCommand = new RelayCommand(ShowRaceLoadForm);
             SkillLoadCommand = new RelayCommand(ShowSkillLoadForm);
+            BonusLoadCommand = new RelayCommand(ShowBonusLoadForm);
+            BonusItemLoadCommand = new RelayCommand(ShowBonusItemLoadForm);
         }
 
         private void ShowCharacterCreationForm()
@@ -56,6 +63,18 @@ namespace ASC.UI.ViewModels
         {
             _skillLoadForm = Program.ServiceProvider.GetRequiredService<SkillLoad>();
             _skillLoadForm.ShowDialog();
+        }
+
+        private void ShowBonusLoadForm()
+        {
+            _bonusLoadForm = Program.ServiceProvider.GetRequiredService<BonusLoad>();
+            _bonusLoadForm.ShowDialog();
+        }
+
+        private void ShowBonusItemLoadForm()
+        {
+            _bonusItemLoadForm = Program.ServiceProvider.GetRequiredService<BonusItemLoad>();
+            _bonusItemLoadForm.ShowDialog();
         }
     }
 }

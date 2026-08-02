@@ -24,12 +24,17 @@ namespace ASC.BC
         }
         public List<Skill> GetAttributeSkills(Attribute attribute)
         {
-            return _context.Set<Skill>().Include(s => s.Attribute).Where(s => s.Attribute == attribute).ToList();
+            return _context.Set<Skill>().Include(s => s.Attribute).Where(s => s.Attribute == attribute && s.IsAttributeSkill).ToList();
         }
 
         public List<Skill> GetGeneralSkills()
         {
             return _context.Set<Skill>().Where(s => !s.IsRacialSkill && !s.IsAttributeSkill && s.Class == null).ToList();
+        }
+
+        public int GetSkillXpCost(Skill skill)
+        {
+            return _context.Set<Skill>().AsNoTracking().First(s => s.Id == skill.Id).XPCost;
         }
     }
 }

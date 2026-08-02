@@ -9,5 +9,6 @@ namespace ASC.BC.Interfaces
         List<Skill> GetClassSkills(Class selectedClass);
         List<Skill> GetAttributeSkills(Attribute attribute);
         List<Skill> GetGeneralSkills();
+        int GetSkillXpCost(Skill skill);
     }
 }
