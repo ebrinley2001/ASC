@@ -24,7 +24,7 @@ namespace ASC.Installer
                 ),
                 new Dir(DATA_INSTALL_DIR,
                     new DirPermission("Everyone", GenericPermission.All),
-                    new File(@"..\..\..\..\Resources\ascdb.db")
+                    new File("..\\..\\..\\..\Resources\ascdb.db")
                 )
             );
 
