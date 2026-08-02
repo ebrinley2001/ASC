@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
+using PuppeteerSharp;
 using System;
 using System.IO;
 using System.Linq;
 using WixSharp;
 using WixSharp.Forms;
 using File = WixSharp.File;
+using Platform = WixSharp.Platform;
 
 namespace ASC.Installer
 {
@@ -17,6 +19,12 @@ namespace ASC.Installer
         {
             IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             var buildInfo = new BuildInfo(config);
+
+            var fetcher = new BrowserFetcher(new BrowserFetcherOptions
+            {
+                Path = buildInfo.SourcePath
+            });
+            fetcher.DownloadAsync().GetAwaiter().GetResult();
 
             var project = new ManagedProject(buildInfo.AppName,
                 new Dir(PROGRAM_INSTALL_DIR,
