@@ -22,44 +22,47 @@ jobs:
           dotnet-version: 8.0.x
           
       - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Install Wix
-        run: dotnet tool install --global wix
-        
-      - name: Install Wix Extensions
-        run: wix.exe extension add -g WixToolset.UI.wixext/6.0.0 | 
-             wix.exe extension add -g WixToolset.Netfx.wixext/6.0.0 |
-             wix.exe extension add -g WixToolset.Bal.wixext/6.0.0 |
-             wix.exe extension add -g WixToolset.Util.wixext/6.0.0
+        run: |
+          dotnet restore
+          dotnet tool install --global wix
+          wix eula accept wix7
+          wix extension add -g WixToolset.UI.wixext
+          wix.exe extension add -g WixToolset.UI.wixext/6.0.0 | 
+          wix.exe extension add -g WixToolset.Netfx.wixext/6.0.0 |
+          wix.exe extension add -g WixToolset.Bal.wixext/6.0.0 |
+          wix.exe extension add -g WixToolset.Util.wixext/6.0.0
+          
+      - name: Build Release
+        id: build
+        run: dotnet build -c Release --no-restore
              
       - name: Build Installer
-        run: dotnet build ASC.Installer/ASC.Installer.csproj -c Release --no-restore
-        
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v7.0.0
-        with:
-          name: release-assets
-          path: ASC.Installer/build
-          overwrite: true
+        shell: powershell
+        run: |
+          $BuildExe = (Get-Item "ASC.Installer/bin/Release/net472/ASC.Installer.exe").FullName
+          & $BuildExe
+
+      - name: Get File Info
+        id: file_info
+        shell: powershell
+        run: |
+          $FileInfo = Get-ChildItem -Filter '*.msi' -Recurse -File
+          $FileInfo.Count
+          $FileInfo.Name -match '\-(.*?)\.msi'
+          echo "file_path=$($FileInfo.FullName)" >> $env:GITHUB_OUTPUT
+          echo "file_name=$($FileInfo.Name)" >> $env:GITHUB_OUTPUT
+          echo "build_version=$($Matches[1])" >> $env:GITHUB_OUTPUT
           
-    release:
-      needs: build
-      permissions: write-all
-      runs-on: windows-latest
-      steps:
-          - name: Download a Build Artifact
-            uses: actions/download-artifact@v8.0.0
-            with:
-              name: release-assets
-              path: staging/
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ steps.file_info.outputs.file_name }}
+          files: ${{ steps.file_info.outputs.file_path }}
+          tag_name: ${{ steps.file_info.outputs.build_version }}
+          prerelease: ${{ github.event_name == 'workflow_dispatch' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
                     
-          - name: Create GitHub Release
-            uses: softprops/action-gh-release@v2
-            with:
-              files: staging/*
-              tag_name: ASC-${{ github.ref_name }}-${{ github.run_id }}
-              prerelease: ${{ github.event_name == 'workflow_dispatch' }}
-            env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     
