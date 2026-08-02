@@ -2,6 +2,7 @@
 using ASC.BC.SkillHelpers;
 using ASC.Models;
 using ASC.Models.DB;
+using ASC.UI.Controls;
 using ASC.UI.Helpers;
 using System.ComponentModel;
 using System.Windows.Input;
@@ -15,6 +16,8 @@ namespace ASC.UI.ViewModels
         private IClassBC _classBC;
         private ILevelBC _levelBC;
         private IAttributeBC _attributeBC;
+        private IBonusBC _bonusBC;
+        private IBonusItemBC _bonusItemBC;
 
         private Character _character;
 
@@ -150,12 +153,14 @@ namespace ASC.UI.ViewModels
         public ICommand CompleteCommand { get; set; }
 
 
-        public CharacterCreationViewModel(ISkillBC skillBc, IRaceBC raceBc, IClassBC classBc, ILevelBC levelBc, IAttributeBC attributeBC)
+        public CharacterCreationViewModel(ISkillBC skillBc, IRaceBC raceBc, IClassBC classBc, ILevelBC levelBc, IAttributeBC attributeBC, IBonusBC bonusBC, IBonusItemBC bonusItemBC)
         {
             _skillBC = skillBc;
             _classBC = classBc;
             _levelBC = levelBc;
             _attributeBC = attributeBC;
+            _bonusBC = bonusBC;
+            _bonusItemBC = bonusItemBC;
 
             Character = new Character();
 
@@ -242,6 +247,54 @@ namespace ASC.UI.ViewModels
             OnPropertyChanged(nameof(Stamina));
             OnPropertyChanged(nameof(MaxArmor));
             OnPropertyChanged(nameof(NatArmor));
+        }
+
+        public int AddClassBonuses(Class classAdded)
+        {
+            int skillsAdded = 0;
+            List<Bonus> bonuses = _bonusBC.GetClassBonuses(classAdded);
+            if (bonuses != null && bonuses.Count > 0)
+            {
+                foreach (Bonus bonus in bonuses)
+                {
+                    if (bonus.BonusItems.Count > 0)
+                    {
+                        if (bonus.Amount > 0)
+                        {
+                            ClassBonusForm form = new ClassBonusForm(bonus);
+                            form.ShowDialog();
+
+                            foreach (var item in form.ViewModel.BonusItems)
+                            {
+                                if (item.Key > 0)
+                                {
+                                    item.Value.XPCost = 0; //No Cost
+                                    SelectedSkills.Add(item);
+                                    skillsAdded++;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //HANDLE PASSIVE EFFECTS THAT ARENT SKILL ADDITIONS
+                        }
+                    }
+                }
+            }
+            return skillsAdded;
+        }
+
+        public void RemoveClassBonuses()
+        {
+            List<OEKVP<int, Skill>> bonuses = SelectedSkills.Where(
+                s => s.Value.XPCost == 0 && 
+                SelectedClasses.Where(c => s.Value.Class != null && s.Value.Class.Equals(c)).Count() == 0
+                ).ToList();
+
+            foreach (var bonus in bonuses)
+            {
+                SelectedSkills.Remove(bonus);
+            }
         }
 
         public void SetAvailibleSkills()

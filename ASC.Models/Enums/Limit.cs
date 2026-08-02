@@ -16,6 +16,8 @@
         TwoPerLevel = 9,
         ThreePerLevel = 10,
 
-        OnePerTwoHp = 11,
+        TenPerLevel = 11,
+
+        OnePerTwoHp = 12,
     }
 }

@@ -15,9 +15,9 @@ namespace ASC.UI
     public partial class CharacterCreationForm : Form
     {
         public CharacterCreationViewModel ViewModel { get; set; }
-        public CharacterCreationForm(ISkillBC skillBc, IRaceBC raceBc, IClassBC classBc, ILevelBC levelBc, IAttributeBC attributeBC)
+        public CharacterCreationForm(ISkillBC skillBc, IRaceBC raceBc, IClassBC classBc, ILevelBC levelBc, IAttributeBC attributeBC, IBonusBC bonusBC, IBonusItemBC bonusItemBC)
         {
-            ViewModel = new CharacterCreationViewModel(skillBc, raceBc, classBc, levelBc, attributeBC);
+            ViewModel = new CharacterCreationViewModel(skillBc, raceBc, classBc, levelBc, attributeBC, bonusBC, bonusItemBC);
 
             InitializeComponent();
             ApplyBindings();
@@ -67,6 +67,7 @@ namespace ASC.UI
             SkillsDgv.AutoGenerateColumns = false;
             SkillsDgv.DataSource = ViewModel.SelectedSkills;
             SkillsDgv.CellFormatting += new DataGridViewCellFormattingEventHandler(FormatSkillCells);
+            SkillsDgv.UserDeletingRow += SkillsDgv_UserDeletingRow;
 
             ViewModel.SelectedSkills.ListChanged += new ListChangedEventHandler(BindNewSkill);
             ViewModel.SelectedClasses.ListChanged += new ListChangedEventHandler(OnClassChange);
@@ -191,6 +192,28 @@ namespace ASC.UI
         {
             ViewModel.CheckCanAddClasses();
             ViewModel.CalculateStats();
+
+            if (e.ListChangedType.Equals(ListChangedType.ItemAdded))
+            {
+                int addedSkills = ViewModel.AddClassBonuses(ViewModel.SelectedClasses[e.NewIndex]);
+                for (int i = 0; i < addedSkills; i++)
+                {
+                    SkillsDgv.Rows[SkillsDgv.Rows.Count - (addedSkills - i)].ReadOnly = true;
+                }
+            }
+            else if (e.ListChangedType.Equals(ListChangedType.ItemDeleted))
+            {
+                ViewModel.RemoveClassBonuses();
+            }
+        }
+
+        private void SkillsDgv_UserDeletingRow(object? sender, DataGridViewRowCancelEventArgs e)
+        {
+            //Prevent Bonus Skills from being deleted
+            if (e.Row.ReadOnly)
+            {
+                e.Cancel = true;
+            }
         }
 
         private void OnAttributeChange(object sender, EventArgs e)

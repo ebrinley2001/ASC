@@ -189,7 +189,7 @@ namespace ASC.UI.ViewModels.UtilForms
 
         public ICommand SaveCommand { get; set; }
 
-        public SkillLoadViewModel(ISkillBC skillBC, IClassBC classBC, IRaceBC raceBc, IAttributeBC attribBC)
+        public SkillLoadViewModel(ISkillBC skillBC, IClassBC classBC, IRaceBC raceBC, IAttributeBC attribBC)
         {
             _skillBC = skillBC;
             _skill = new Skill();
@@ -199,7 +199,7 @@ namespace ASC.UI.ViewModels.UtilForms
             SaveCommand = new RelayCommand(Save);
 
             Classes = new BindingList<Class>(classBC.GetCollection());
-            Races = new BindingList<Race>(raceBc.GetCollection());
+            Races = new BindingList<Race>(raceBC.GetCollection());
             Attributes = new BindingList<Attribute>(attribBC.GetCollection());
 
             Classes.Insert(0, new Class() { Id = -1, Name = "Select a Class" });
