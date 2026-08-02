@@ -11,6 +11,8 @@ namespace ASC.BC
         public DbSet<Level> Level { get; set; }
         public DbSet<Race> Race { get; set; }
         public DbSet<Skill> Skill { get; set; }
+        public DbSet<Bonus> Bonus { get; set; }
+        public DbSet<BonusItem> BonusItem { get; set; }
 
         public ASCContext(DbContextOptions<ASCContext> options) 
             : base(options)

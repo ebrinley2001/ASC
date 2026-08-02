@@ -22,6 +22,8 @@ namespace ASC.UI
             ClassBtn.Bind(ViewModel, v => v.ClassLoadCommand);
             RaceBtn.Bind(ViewModel, v => v.RaceLoadCommand);
             SkillBtn.Bind(ViewModel, v => v.SkillLoadCommand);
+            BonusBtn.Bind(ViewModel, v => v.BonusLoadCommand);
+            BonusItemBtn.Bind(ViewModel, v => v.BonusItemLoadCommand);
         }
     }
 }

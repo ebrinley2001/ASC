@@ -32,6 +32,8 @@ namespace ASC.BC.SkillHelpers
                     return amount <= character.Level.Id * 2;
                 case Limit.ThreePerLevel:
                     return amount <= character.Level.Id * 3;
+                case Limit.TenPerLevel:
+                    return amount <= character.Level.Id * 10;
 
                 case Limit.OnePerTwoHp:
                     return amount <= character.Hp / 2;
