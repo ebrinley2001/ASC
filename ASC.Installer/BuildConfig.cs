@@ -12,6 +12,7 @@ namespace WixSharp
         public string FullSemVer { get; }
         public string Version { get; }
         public string SourcePath { get; }
+        public string DBPath { get; }
         public string IconPath { get; }
         public string LogoPath { get; }
         public string AssemblyPath { get; }
@@ -35,6 +36,7 @@ namespace WixSharp
             FullSemVer = version.ProductVersion;
             Version = version.FileVersion;
             SourcePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, appSettings["SourcePath"]));
+            DBPath = Path.GetFullPath(Path.Combine(SourcePath, "..\\..\\..\\..\\Resources\\ascdb.db"));
             IconPath = appSettings["IconPath"];
             LogoPath = appSettings["LogoPath"];
         }
